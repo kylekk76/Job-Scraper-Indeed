@@ -1,4 +1,4 @@
-# Job-Scraper-Indeed - Started - 9/08/2022
+# Job-Scraper - Started - 9/08/2022
 ### What this proyect is about:
 
 This is the first proyect that i try to deal with an issue and it's that i do not like much the way linked id present the jobs as
