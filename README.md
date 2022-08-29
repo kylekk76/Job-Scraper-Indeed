@@ -1,8 +1,7 @@
 # Job-Scraper - Started - 9/08/2022
 ### What this proyect is about:
 
-This is the first proyect that i try to deal with an issue and it's that i do not like much the way linked id present the jobs as
-much as you got plenty of choises:
+This is the first proyect that i try to deal with an issue and it's that i do not like to look for jobs as much so im trying to automatize all the process
 
 Is dificult to keep track of the diferent jobs.
 Compare them
@@ -26,6 +25,11 @@ Until is a bit more developed, you would scrape the data with the job scraper an
 
 In a future would be all in a automatic program that just need to be run once, and will create all the plots and necesary files.
 
+#Updated# (29/08/2022) (This scraper is based in UK so would not work for other countries)
+Now it contain 2 folders one with the jupyter notebooks that take you throw all the program and the second folder with the program, if you open and run the mainData.py that would ask you to input the job title, the city and the radius that you want to search for, this would generate 3 files.
+- RawData, for if you wanna use it for whatever other thing
+- CleanData, is the same that the other Data but cleaned up, so is not repited jobs and everything is presented in the right format.
+
 
 ### Possibles bugs:
 - Could be as happend before that indeed or other page upgrade their security and this program would not longer work giving you an   403 error, in that case i would look arround how to go arround.
@@ -39,7 +43,7 @@ The rest of the Code should work fine, if something its not working in your comp
 - [x] Clean the data for pos-procesing. (22/08/2022) **Not finished**
 - [x] Searcher for diferent jobs. (21/08/2022) **Not finished**
 - [x] Save to an excel file (22/08/2022)
-- [ ] Searcher for diferent locations (right know when you pastle your link search in your last location).
+- [x] Searcher for diferent locations (in UK 29/08/2022)
 - [ ] 2nd part that when you select a list of jobs, scrape more information about it
 - [ ] Add diferent pages as a linked id to the scraping to not use just indeed.
 - [ ] Plot the data in a interactive geomap.
@@ -47,6 +51,8 @@ The rest of the Code should work fine, if something its not working in your comp
 - [ ] Store the data from diferent searches in the same place.
 
 ### Log:
-- fixed the dataframe to get the payrate separate in 2 columns and in the right type. (25/08/2022)
-- fixed the Localization Column to now be separate in City and Area. (25/08/2022)
-- create a visualization by job title, salary and jobs quantities posted for that group.(26/08/2022)
+- Fixed the dataframe to get the payrate separate in 2 columns and in the right type. (25/08/2022)
+- Fixed the Localization Column to now be separate in City and Area. (25/08/2022)
+- Create a visualization by job title, salary and jobs quantities posted for that group.(26/08/2022)
+- Set up all the columns in the right format and eliminated the repited jobs(29/08/2022)
+- Set up the basic program run in on python that create all the right files to use later (29/08/2022)
