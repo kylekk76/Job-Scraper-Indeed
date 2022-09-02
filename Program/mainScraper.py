@@ -3,21 +3,43 @@ import cloudscraper
 from bs4 import BeautifulSoup
 import pandas as pd
 
-###
 from CleanData import cleanData
 
-
-print("The visualization is not implemented yet, for now we just got the basics")
+#### #### #### #### #### #### #### #### #### #### #### #### #### #### #### #### #### ####
+dataCleandf=pd.DataFrame()
+print("The visualization is not implemented yet, for now we just )got the basics")
 joblist=[]
 job=input("Introduce job Tittle: ")
-place=input("Input City: ").capitalize()
-radius=input("input Radius, 5, 10, 15, 20, 50: ")
 if len(job) >= 1: job = "%20".join(job.split())
+place=input("Input City: ").capitalize()
+radius=input("input Radius, 5, 10, 15, 20, 50 miles: ")
+print("Do you want to search by industry?")
+industryQ=input("Introduce Y or N: ").capitalize()
+
+print("""
+1 Retail & Wholesale                            8  Management & Consulting                          15 Arts, Entertainment & Recreation 
+2 Human Resourses & Staffing                    9  Information Technology                           16 Energy, Mining, Utilities
+3 Restaurant & Food Service                     10 Non-profit & NGO                                 17 Pharmaceutical & Biotechnology
+4 Construction, Repair & Maintenance Services   11 Government & Public Administration               18 Education
+5 Healthcare                                    12 Manufacturing                                    29 Media & Communication
+6 Finance                                       13 Telecommunications
+7 Hotel & Travel Accommodation                  14 Real Estate
+              """)
+
+dit={"1":"48BZP","2":"Q3FC3","3":"W2F4E","4": "NTW8X", "5":"22VKN","6":"MSQWR","7": "X42V4", "8":"92AZY","9":"NKR5F","10":"ZMM32","11":"B23RH","12":"CPGHF","13":"JGU5R","14":"S7KHR",
+        "15":"N322U","16":"TAN6J","17":"5ZM33","18":"RFWNN", "19":"4DGEF"}
+if industryQ == "Y": industry=dit[input("Input the number of the industry you wanna concentrate on: ")]
+
+
 
 
 def extract_the(page=0):
+
     scraper = cloudscraper.create_scraper(delay=10, browser={'browser': 'firefox','platform': 'windows','mobile': False})
-    url=f'https://uk.indeed.com/jobs?q={job}&l={place}%2C%20{place}&radius={radius}&start={page}' # placeholder to go throw the information we need
+
+    if industryQ == "N": url=f'https://uk.indeed.com/jobs?q={job}&l={place}%2C%20{place}&radius={radius}&start={page}' # placeholder to go throw the information we need
+    if industryQ == "Y": url=f'https://uk.indeed.com/jobs?q={job}&l={place}%2C%20{place}&sc=0kf%3Acmpsec({industry})%3B&radius={radius}&start={page}'
+    
     r = scraper.get(url)
     soup= BeautifulSoup(r.text,"html.parser")
     return soup,r
@@ -47,6 +69,32 @@ def transform(soup):
         joblist.append(djobs)
     return 
 
+def save_all_data(dfraw,dataCleandf):
+    print("Saved in Excel RawData")
+    dfraw.to_excel('RawData.xlsx')
+    print("Saving Clean Data in Excel File")
+    dataCleandf.to_excel("CleanData.xlsx")
+    # Jpaymore.to_excel("GroupsData.xlsx")
+    
+    question=input("Do you want to add this search to the Database?: ").capitalize()
+    if question == "Y":
+        print("Procesing...")
+        database=pd.read_excel("DataBase.xlsx")
+        newdatabase=database.append(dataCleandf)
+        newdatabase.drop_duplicates(["Link","Last_Active_or_Posted"],keep="first",inplace=True)
+        newdatabase.sort_values("Last_Active_or_Posted",inplace=True)
+        newdatabase.to_excel("Database.xlsx")
+    elif question == "K":
+        print("Procesing Data Analyst Jobs...")
+        database=pd.read_excel("DataAnalystBase.xlsx")
+        newdatabase=database.append(dataCleandf)
+        newdatabase.drop_duplicates(["Link","Last_Active_or_Posted"],keep="first",inplace=True)
+        newdatabase.sort_values("Last_Active_or_Posted",inplace=True)
+        newdatabase.to_excel("DataAnalystBase.xlsx")
+
+    else: print("You did not make changes in the Data Base")
+
+    print("All the data is Saved")
 
 
 def main():
@@ -57,13 +105,10 @@ def main():
         info=extract_the(page)[0]
         transform(info)
     print("Generating Data frame")
-    df=pd.DataFrame(joblist) #creating a dataframe
-    df.to_excel(f'RawData.xlsx')
-    print("Saved in Excel RawData")
-    print("Cleaning the Data")
-    cleanData()
-    print("All Data Save")
-
+    dfraw=pd.DataFrame(joblist) #creating a dataframe
+    dataCleandf=cleanData()
+    save_all_data(dfraw,dataCleandf)
+    
 
 if __name__ == "__main__":
     main()

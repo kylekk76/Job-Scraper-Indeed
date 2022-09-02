@@ -1,10 +1,9 @@
 import pandas as pd
-import numpy as np
-
 
 def cleanData():
+    print("Cleaning the Data")
     df=pd.read_excel("RawData.xlsx")
-    df=df.sort_values("Status").drop_duplicates("Company",keep="last")
+    df=df.sort_values("Status").drop_duplicates("Link",keep="first")
 
     #We extract each of the groups in in the status to later build a timer
     employer=df["Status"].str.extract("(Employer)(\d{1,2})")
@@ -21,14 +20,16 @@ def cleanData():
     posted=posted.fillna(employer)
     posted=posted.fillna(posted2)
     posted=posted.fillna(postedToday)
+    posted=posted.fillna("0")
     #wecould do this replace in regex, but i though was going to be easy do it later on
     posted[1]=posted[1].replace("Today","0")
-
+    
     #Now we change to int to can use the timedelta
     posted[1]=posted[1].astype(int)
 
     #And we apply a lambda to each number to transform it in a date
     posted[1]=posted[1].apply(lambda date: (pd.to_datetime("today")-pd.Timedelta(days=date)).strftime("%d/%m/%Y") )
+    
 
     df[["Status","Last_Active_or_Posted"]]=posted
 
@@ -61,21 +62,18 @@ def cleanData():
     df.sort_values("Starter_Salary",ascending=False,inplace=True)
     df.set_index(df.columns[0],inplace=True)
     df.index.name=""
+    dataCleandf=df
 
-    ############################################################################
+    # ############################################################################
 
-    #Jpaymore stands for Jobs that pay more
-    Jpaymore=df.groupby("Title").max("Starter_Salary")
-    Jpaymore["Count"]=df.groupby("Title")["Title"].count()
-    Jpaymore.reset_index(inplace=True)
-    #creating a serie to extract the tittle to reduce the variance
-    payserie=Jpaymore["Title"].str.extract(r"(^[A-z][a-z]+\s[A-za-z\s&]+)|(.*)")
-    payserie[0].fillna(payserie[1],inplace=True)
-    Jpaymore["Title"]=payserie[0]
-    Jpaymore.sort_values(by="Starter_Salary",ascending=False,inplace=True)
-
-
-    print("Saving Data in CleanData and GroupsData Excel File")
-
-    df.to_excel("CleanData.xlsx")
-    Jpaymore.to_excel("GroupsData.xlsx")
+    # #Jpaymore stands for Jobs that pay more
+    # Jpaymore=df.groupby("Title").max("Starter_Salary")
+    # Jpaymore["Count"]=df.groupby("Title")["Title"].count()
+    # Jpaymore.reset_index(inplace=True)
+    # #creating a serie to extract the tittle to reduce the variance
+    # payserie=Jpaymore["Title"].str.extract(r"(^[A-z][a-z]+\s[A-za-z\s&]+)|(.*)")
+    # payserie[0].fillna(payserie[1],inplace=True)
+    # Jpaymore["Title"]=payserie[0]
+    # Jpaymore.sort_values(by="Starter_Salary",ascending=False,inplace=True)
+    print("Data Cleaned")
+    return dataCleandf
