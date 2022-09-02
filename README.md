@@ -13,9 +13,9 @@ My idea is to have all the data as tidy up as posible to have a better idea of t
 
 
 ### Way to use:(This scraper is based in UK so would you will need to do some changes for your contry)
-
+- In the jupyter notebook you have how this program works in a early version, any questions just ask.
 #Updated# (02/09/2022)
-Open the folder program and run the mainScraper.py you should have installed the librarys and the pack to read xlsx as this are the files that you gonna use to run the program, you need then to imput diferent things for the search and the rest is automatic.
+Open the folder "program" and run the mainScraper.py you should have installed the librarys and the pack to read xlsx as this are the files that you gonna use to run the program, you need then to imput diferent things for the search and the rest is automatic.
 
 You will have 4 files created, raw data(this is the data as come from the scraping), clean data (this is the data processed), data base (this is where all the search gonna be stored), data analyst base (this is a file just to storage that job)
 
