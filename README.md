@@ -29,7 +29,7 @@ You will have 4 files created, raw data(this is the data as come from the scrapi
 The rest of the Code should work fine, if something its not working in your computer report to me, but is posible you have some missing packet or libraries.
 
 ### To Implement:
-- [x] Loop to go throw all the pages avaliable (i will not implement this as after a maximun of 10 pages the result is useles)
+- [x] Loop to go throw all the pages avaliable (05/09/2022)
 - [x] Clean the data for pos-procesing. (02/09/2022) 
 - [x] Search for diferent jobs. (01/09/2022) 
 - [x] Save to an excel file (22/08/2022)
@@ -50,4 +50,5 @@ The rest of the Code should work fine, if something its not working in your comp
 - Remodelate a bit the program to make it more readable and organized. (02/09/2022)
 - Added dinamic industry choise (05/09/2022)
 - Group all in one file (05/09/2022)
+- Diferent Choises to do a personalize search (05/09/2022)
 
