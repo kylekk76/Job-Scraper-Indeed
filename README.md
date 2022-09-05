@@ -14,9 +14,6 @@ My idea is to have all the data as tidy up as posible to have a better idea of t
 
 ### Way to use:(This scraper is based in UK so would you will need to do some changes for your contry)
 
-**Hi the code part for select the industry is a bit bugged right now, tuesday i will fix the code and implement some stuff , you can see in the beta file how is going the changes**
-**But is giving me an error just now with jobs as they have not been added to the list as before, and is giving me an empty dataframe so as i say i will check that on tuesday as i say**
-
 - In the jupyter notebook you have how this program works in a early version, any questions just ask.
 #Updated# (02/09/2022)
 Open the folder "program" and run the mainScraper.py you should have installed the librarys and the pack to read xlsx as this are the files that you gonna use to run the program, you need then to imput diferent things for the search and the rest is automatic.
@@ -40,7 +37,7 @@ The rest of the Code should work fine, if something its not working in your comp
 - [ ] Scrape more information about the jobs
 - [ ] Add diferent pages as a linked id to the scraping to not use just indeed.
 - [ ] Data plots.
-- [ ] Search for diferent industrys (02/09/2022) **actually this is bugged, in the new code is fixed, tuesday i will update the new code fixed**
+- [ ] Search for diferent industrys (02/09/2022) fixed(05/09/2022)
 - [x] Data Base to store all the jobs since you start to use the program.(02/09/2022)
 
 ### Log:
@@ -51,6 +48,6 @@ The rest of the Code should work fine, if something its not working in your comp
 - Set up the basic program to run in python and create all the right files to use later (29/08/2022)
 - Fixed a problem with the replicate jobs in the clean data and the database (02/09/2022)
 - Remodelate a bit the program to make it more readable and organized. (02/09/2022)
-- Added choise of industry (02/09/2022)
-- 
-- 
+- Added dinamic industry choise (05/09/2022)
+- Group all in one file (05/09/2022)
+
