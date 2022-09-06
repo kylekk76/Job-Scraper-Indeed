@@ -1,13 +1,6 @@
 # Job-Scraper - Started - 9/08/2022
 ### What this proyect is about:
 
-This is the first proyect where i need to deal with a real issue...
-
-Is dificult to keep track of the diferent jobs offers and the diferent webpages.
-Compare the jobs, if are the same posted twice or diferent ones...
-Looking if you are a good fit for them, or they are for you.
-if they are underpayed jobs for the actual market of in another hand if they have a good compensation...
-
 I would like to have a program that i can run every 2 days or so, filter for me all the jobs and clean the information so everything is in the right format.
 My idea is to have all the data as tidy up as posible to have a better idea of the market at the moment, also i would like to see how the job market is evolving throw the next 6 months or so.... so i can have some information of the diferent areas of the city jobwise to conect it with my next proyect about housing market... as i want to buy a house next year.
 
@@ -37,7 +30,7 @@ The rest of the Code should work fine, if something its not working in your comp
 - [ ] Scrape more information about the jobs
 - [ ] Add diferent pages as a linked id to the scraping to not use just indeed.
 - [ ] Data plots.
-- [ ] Search for diferent industrys (02/09/2022) fixed(05/09/2022)
+- [x] Search for diferent industrys (02/09/2022) fixed(05/09/2022)
 - [x] Data Base to store all the jobs since you start to use the program.(02/09/2022)
 
 ### Log:
