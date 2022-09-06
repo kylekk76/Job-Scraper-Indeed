@@ -59,9 +59,9 @@ def number_of_pages(soup):
             print(f"it is {number} jobs")
             
         else:
-            print("Sorry, aparently we could scan the number of jobs, you can introduce the number of pages you wanna scrape")
+            print("Sorry, aparently we could scan the number of jobs, can you introduce the number of pages you wanna scrape?")
             try:
-                number_pages=input("Introduce number")
+                number_pages=int(input("Introduce number: "))
                 number_pages =number_pages*10
             except: 
                 print("Incorrect Data")
@@ -101,6 +101,7 @@ def transform(soup):
 
 def cleanData(dfraw):
 
+    dataCleandf=pd.DataFrame()
     print("Cleaning the Data")
     df=dfraw.sort_values("Status").drop_duplicates("Link",keep="first")
 
@@ -112,6 +113,8 @@ def cleanData(dfraw):
     df["Status"]=df["Status"].str.replace("PostedJust posted","PostedToday")
     df["Status"]=df["Status"].str.replace("PostedToday","Posted Today")
     postedToday=df["Status"].str.extract("(Posted)\s(Today)")
+    #visiteddays=df["Status"].str.exctract("(Visited)\s(\d{1,2})\sdays")
+    #visitedminutes=df["Status"].str.exctract("(Visited)\s(\d{1,2})\sminutes")
 
 
     #Time to fill all the dataframe 
@@ -119,7 +122,11 @@ def cleanData(dfraw):
     posted=posted.fillna(employer)
     posted=posted.fillna(posted2)
     posted=posted.fillna(postedToday)
+    #posted=posted.fillna(visiteddays)
+    #posted=posted.fillna(visitedminutes)
+    
     posted=posted.fillna("0")
+
     #wecould do this replace in regex, but i though was going to be easy do it later on
     posted[1]=posted[1].replace("Today","0")
     
@@ -133,16 +140,18 @@ def cleanData(dfraw):
     df[["Status","Last_Active_or_Posted"]]=posted
 
     #we divide the colum salary in 2
+    
     df[["Starter_Salary","Top_Salary"]]=df["salary"].str.extract(r"£(\d{2},*\d*)?(?:.*)?£(\d*,*\d*)")
     df["Top_Salary"]=df["Top_Salary"].fillna(df["salary"].str.extract(r"£([0-9,]*)")[0])
                                     
 
     df.drop("salary",axis=1,inplace=True)
     df["Starter_Salary"].fillna(df["Top_Salary"],inplace=True) 
-
-    #we use lambda to clean the "," from the numbers and convert the type to float so we can use it
-    df[["Starter_Salary","Top_Salary"]]=df[["Starter_Salary","Top_Salary"]].apply(lambda x: x.str.replace(",","")).astype(float)
-
+    try:
+        #we use lambda to clean the "," from the numbers and convert the type to float so we can use it
+        df[["Starter_Salary","Top_Salary"]]=df[["Starter_Salary","Top_Salary"]].apply(lambda x: x.astype(str).str.replace(",","")).astype(float)
+    except AttributeError:
+        print(f"We try to clean the salary but {AttributeError} ocurred")
     # we clean the posible spaces from the database
     df["Location"]=df["Location"].str.strip()
 
@@ -174,23 +183,23 @@ def save_all_data(dfraw,dataCleandf):
 
     print("Shape",dataCleandf.shape)
 
-    question=input("Do you want to add this search to the Database?: ").capitalize()
+    question=input("Do you want to add this search to the Database?: Y/N ").capitalize()
     if question == "Y":
         print("Procesing...")
         database=pd.read_excel("DataBase.xlsx")
         newdatabase=database.append(dataCleandf)
-        newdatabase.drop_duplicates(["Link","Last_Active_or_Posted"],keep="first",inplace=True)
+        newdatabase.drop_duplicates("Link",keep="first",inplace=True)
         #newdatabase.reset_index(drop=True,inplace=True)
-        newdatabase["Last_Active_or_Posted"]=pd.to_datetime(newdatabase["Last_Active_or_Posted"])
+        # newdatabase["Last_Active_or_Posted"]=pd.to_datetime(newdatabase["Last_Active_or_Posted"])
         newdatabase.sort_values("Last_Active_or_Posted",inplace=True)
         newdatabase.to_excel("Database.xlsx",index=False)
     elif question == "K":
         print("Procesing Data Analyst Jobs...")
         database=pd.read_excel("DataAnalystBase.xlsx")
         newdatabase=database.append(dataCleandf)
-        newdatabase.drop_duplicates(["Link","Last_Active_or_Posted"],keep="first",inplace=True)
+        newdatabase.drop_duplicates("Link",keep="first",inplace=True)
         #newdatabase.reset_index(drop=True,inplace=True)
-        newdatabase["Last_Active_or_Posted"]=pd.to_datetime(newdatabase["Last_Active_or_Posted"])
+        # newdatabase["Last_Active_or_Posted"]=pd.to_datetime(newdatabase["Last_Active_or_Posted"])
         newdatabase.sort_values("Last_Active_or_Posted",inplace=True)
         newdatabase.to_excel("DataAnalystBase.xlsx",index=False)
 
@@ -216,6 +225,7 @@ def main():
 
     print("Generating Data frame")
     dfraw=pd.DataFrame(joblist) #creating a dataframe
+   
     dataCleandf=cleanData(dfraw)
     save_all_data(dfraw,dataCleandf)
 
