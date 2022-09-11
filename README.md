@@ -15,9 +15,9 @@ You will have 4 files created, raw data(this is the data as come from the scrapi
 
 
 ### Possibles bugs:
-- Could be as happend before that indeed or other page upgrade their security and this program would not longer work giving you an   403 error, in that case i would look arround how to go arround.
+- Could be happend as before that indeed or other page upgrade their security and this program not longer work giving you an 403 error, in that case i would look arround how to go arround.
 - Depends of your Country is posible that their webpage is port in a diferent way and some of the code need be adapted for the       display that you have
-- The link that i use to go throw the pages is thatone that you get for few seconds after click in a second page of a search, that   gives you a link to iterate for the pages, is posible that you gonna need for now to change that link to your own.
+- If you use a lot this program would give an error, but after 12h you can use it as normal.
 
 The rest of the Code should work fine, if something its not working in your computer report to me, but is posible you have some missing packet or libraries.
 
